@@ -1,13 +1,13 @@
 import React from 'react';
+import './Cart.css';
 
-const Cart = ({ items, setItems }) => {
+const Cart = ({ items, setItems, cartActive, setCartActive }) => {
   let [total, setTotal] = React.useState(0);
 
   const removeItem = (index) => {
     console.log(index);
     let auxArray = items;
     auxArray.splice(index, 1);
-    console.log(auxArray);
     setItems([...auxArray]);
   };
 
@@ -28,18 +28,32 @@ const Cart = ({ items, setItems }) => {
   }, [items]);
 
   return (
-    <div>
-      <h1>Cart</h1>
-      <ul>
-        {items.map((item, index) => (
-          <li>
-            {item.name} - {item.qty} -
-            <button onClick={() => removeItem(index)}>Remove</button>
-          </li>
-        ))}
-      </ul>
-      Valor total: {total}
-    </div>
+    <section className={`cart ${cartActive ? 'is-active' : ''}`}>
+      <div className="cart-container">
+        <button className="cart-close" onClick={() => setCartActive(false)}>
+          X
+        </button>
+        <h2 className="cart-title">Cart</h2>
+        {items.length ? (
+          <div>
+            <ul className="cart-list">
+              {items.map((item, index) => (
+                <li className="cart-item">
+                  <p>{item.name}</p>
+                  <p className="cart-qty">{item.qty}</p>
+                  <button className="btn" onClick={() => removeItem(index)}>
+                    Remove
+                  </button>
+                </li>
+              ))}
+            </ul>
+            <p className="cart-total">Valor total: R$ {total}</p>
+          </div>
+        ) : (
+          <p>O carrinho está vazio.</p>
+        )}
+      </div>
+    </section>
   );
 };
 

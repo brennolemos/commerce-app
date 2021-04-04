@@ -1,5 +1,6 @@
 import React from 'react';
 import axios from 'axios';
+import './Products.css';
 
 const Products = ({ items, addCart }) => {
   const [products, setProducts] = React.useState([]);
@@ -26,7 +27,10 @@ const Products = ({ items, addCart }) => {
   const getProducts = () => {
     axios
       .get(`https://6069bc22e1c2a10017544db7.mockapi.io/products`)
-      .then((response) => setProducts(response.data));
+      .then((response) => {
+        console.log(response.data);
+        setProducts(response.data);
+      });
   };
 
   const removeProduct = (id) => {
@@ -40,36 +44,36 @@ const Products = ({ items, addCart }) => {
   }, []);
 
   return (
-    <div>
-      <table className="table">
-        <thead>
-          <tr>
-            <th scope="col">#</th>
-            <th scope="col">Name</th>
-            <th scope="col">Price</th>
-            <th scope="col">Handle</th>
-          </tr>
-        </thead>
-        <tbody>
-          {products &&
-            products.map((product) => (
-              <tr key={product.id}>
-                <th scope="row">{product.id}</th>
-                <td>{product.name}</td>
-                <td>{product.price}</td>
-                <td>
-                  <button onClick={() => checkAndAdd(product)}>Buy</button>
-                  <button onClick={() => removeProduct(product.id)}>
-                    Remove
-                  </button>
-                </td>
-              </tr>
-            ))}
-        </tbody>
-      </table>
+    <section className="products">
+      {products &&
+        products.map((product) => (
+          <div className="product" key={product.id}>
+            <img className="product-image" src={product.image} alt="" />
+            <div className="product-info">
+              <span className="product-price">R$ {product.price}</span>
+              <h2 className="product-title">{product.name}</h2>
+              <button
+                className="btn btn--product"
+                onClick={() => checkAndAdd(product)}
+              >
+                + Buy
+              </button>
+              <button
+                className="btn btn--product"
+                onClick={() => removeProduct(product.id)}
+              >
+                Remove
+              </button>
+            </div>
+          </div>
+        ))}
 
-      <button onClick={addProduct}>Adicionar produto</button>
-    </div>
+      <div style={{ textAlign: 'center' }}>
+        <button className="btn" onClick={addProduct}>
+          Adicionar produto
+        </button>
+      </div>
+    </section>
   );
 };
 
