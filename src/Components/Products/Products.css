@@ -47,3 +47,29 @@
 .btn--product {
   margin-right: 20px;
 }
+
+@media screen and (max-width: 900px) {
+  .products {
+    margin-top: 40px;
+  }
+
+  .product {
+    flex-direction: column;
+    align-items: flex-start;
+    max-width: 300px;
+    margin: 30px auto;
+  }
+
+  .product-info {
+    padding: 20px;
+  }
+
+  .product-image {
+    max-width: 100%;
+    margin-right: 0;
+  }
+
+  .product-title {
+    font-size: 1.5rem;
+  }
+}
